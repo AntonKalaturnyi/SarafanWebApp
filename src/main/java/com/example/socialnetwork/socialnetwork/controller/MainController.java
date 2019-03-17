@@ -31,17 +31,19 @@ public class MainController {
     @GetMapping
     public String main(Model model, @AuthenticationPrincipal User user) {
         HashMap<Object, Object> data = new HashMap<>();
-        data.put("profile", user);
-        data.put("messages", messageRepo.findAll());
+        if (user != null) {
+            data.put("profile", user);
+            data.put("messages", messageRepo.findAll());
+        }
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile ));
         return "index";
     }
-
+/*
     @MessageMapping("/changeMessage")
     @SendTo("/topic/activity")
     public Message change( Message message) {
 
         return messageRepo.save(message);
-    }
+    }*/
 }
